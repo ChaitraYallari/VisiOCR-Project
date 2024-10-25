@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        label {
+            margin-bottom: 10px;
+        }
+        input[type="text"], input[type="file"], input[type="datetime-local"], input[type="email"] {
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #22de90;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button[type="submit"]:hover {
+            background-color: #1ec481;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-left: 4px solid #15cdb7;
+        }
+        .result h2 {
+            color: #15cdb7;
+        }
+        .result img {
+            display: block;
+            margin-top: 20px;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Visitor Management System</h1>
+        <form action="{% url 'generate_pass' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" name="phone" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="visited-time">Visited Time:</label>
+            <input type="datetime-local" id="visited-time" name="visited-time" required>
+            <label for="expire-time">Expire Time:</label>
+            <input type="datetime-local" id="expire-time" name="expire-time" required>
+            <label for="image-upload" class="custom-file-upload">
+                <input id="image-upload" type="file" name="image" accept="image/*" required>
+                Upload Image
+            </label>
+            <button type="submit">Generate Visitor Pass</button>
+        </form>
+        {% if name %}
+            <div class="result">
+                <h2>Visitor Information:</h2>
+                <p><strong>Name:</strong> {{ name }}</p>
+                <p><strong>Date of Birth:</strong> {{ birth_date }}</p>
+                <p><strong>Age:</strong> {{ age }}</p>
+                <p><strong>Phone Number:</strong> {{ phone }}</p>
+                <p><strong>Email:</strong> {{ email }}</p>
+                <p><strong>Visited Time:</strong> {{ visited_time }}</p>
+                <p><strong>Expire Time:</strong> {{ expire_time }}</p>
+                <img src="{{ visiting_pass_image }}" alt="Visitor Pass">
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
